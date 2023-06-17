@@ -1,2 +1,2 @@
 # api-site
-U of Richmond Giphy API Assignment, June 2018
+use api to get the gifs of the foods that you like
