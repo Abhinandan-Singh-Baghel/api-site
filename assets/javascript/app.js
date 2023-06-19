@@ -1,28 +1,54 @@
+// An array to store food item names
 var topicArray = ["Coffee", "Pizza", "Sushi", "Burritos", "Steak", "Seafood", "Barbeque", "Tacos", "Nachos", "Sweet Tea", "La Croix", "Perrier"];
 
+// Display the food buttons
 function displayGifButtons() {
+    // Clear the child elements of #button-display
     $("#button-display").empty();
+
+    // Loop to go through all the items in the array
     for (var i = 0; i < topicArray.length; i++) {
+
+        // Store the button element
         var gifButton = $("<button class='m-1'>");
+
+        // Adding attributes and values to the button
         gifButton.addClass("food btn btn-primary");
-        gifButton.attr("data-name", topicArray[i]);
+        gifButton.attr("data-name", topicArray[i].toLowerCase());
         gifButton.text(topicArray[i]);
+
+        // Pushing the new button element to #button-display
         $("#button-display").append(gifButton);
     }
 
 }
 
+// Adding new food items
 function addNewButton() {
     $("#addGif").on("click", function () {
+        // Get the input string
         var food = $("#newFood").val().trim();
-        if (food == "") {
+
+        // Validate: Input string is empty or out of range
+        if (food == "" || food.length >= 10) {
             return false;
         }
+        // Validate: Inout string is already present in the array
+        for (i = 0; i < topicArray.length; i++) {
+            if (food.toLowerCase() == topicArray[i].toLowerCase()) {
+                return false;
+            }
+        }
+
+        // Push to the main array
         topicArray.push(food);
+
+        // Calling display gif function to render the #button-display again
         displayGifButtons();
     });
 }
 
+// Load the gifs and display on button click
 function showGifs() {
     var foodChoice = $(this).attr("data-name");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + foodChoice + "&api_key=ahbCxqFdx1cR2Kf5VDqdp3djLKDGm81E&limit=10";
